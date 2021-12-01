@@ -13113,17 +13113,17 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>First, a quiz.</p>
-<p>In the two examples below, is the reported accuracy trustable?</p>
+<p>In the two examples below, is the reported accuracy trustworthy?</p>
 <ol>
-<li>Janka gets a brilliant idea to predict heart rate just from IPhone movements. She collects time-synchronized data from IPhone movements and heart rate from Apple watch from thousands of consented users. She then splits the data <em>randomly</em> second-by-second into training, validation, and test sets. After she is happy with her model, she reports that she is able to predict heart rate from IPhone movements with a whopping 98% accuracy on the test set! </li>
+<li>Janka gets a brilliant idea to predict heart rate just from iPhone movements. She collects time-synchronized data from iPhone movements and heart rate from Apple watch from thousands of consented users. She then splits the data <em>randomly</em> second-by-second into training, validation, and test sets. After she is happy with her model, she reports that she is able to predict heart rate from IPhone movements with a whopping 98% accuracy on the test set! </li>
 <li>Sam wishes to use satellite imagery to find locations of forests. Sam obtains some training data of sattelite images and human-drawn geolocated maps of forests. Sam then splits the pixels <em>randomly</em> into training, validation, and test sets. After Sam is happy with his model, he reports his test accuracy as 99%!</li>
 </ol>
-<p>Is the reported accuracy trustable?</p>
+<p>Is the reported accuracy trustworthy?</p>
 <p>NO!</p>
 <p>In this article we will learn why they aren't. We will also learn some basic pre-processing principles one can follow to avoid such pitfalls in the future.</p>
-<h2 id="Why-care-about-how-we-split-data?">Why care about how we split data?<a class="anchor-link" href="#Why-care-about-how-we-split-data?">&#182;</a></h2><p>Splitting data into training, validation, and test sets, is one of the most standard ways to test model performance in supervised learning settings. Even before we get into the modeling (which receivies almost all of the attention in machine learning), not caring about upstream processes like where is the data coming from and how we split it can have bearing consequences on the quality of predictions.</p>
+<h2 id="Why-care-about-how-we-split-data?">Why care about how we split data?<a class="anchor-link" href="#Why-care-about-how-we-split-data?">&#182;</a></h2><p>Splitting data into training, validation, and test sets, is one of the most standard ways to test model performance in supervised learning settings. Even before we get into the modeling (which receivies almost all of the attention in machine learning), not caring about upstream processes like where is the data coming from and how we split it can have consequences on the quality of predictions.</p>
 <p>This is especially important when data has high autocorrelation. Autocorrelation among points simply means that value at a point is similar to values around it. Take temperature for instance. Temperature at any moment is expected to be similar to the temperature in the previous minute. Thus, if we wish to predict temperature, we need to take special care in splitting the data. Specifically, we need to ensure that there is no data leakage between training, validation, and test sets that might exaggerate model performance.</p>
-<h2 id="By-how-much-can-model-performance-be-exaggerated-with-information-leakage?">By how much can model performance be exaggerated with information leakage?<a class="anchor-link" href="#By-how-much-can-model-performance-be-exaggerated-with-information-leakage?">&#182;</a></h2><p>After reading the above, it is natural to ask, is this an important enough problem for me to care about? Through an example of highly autocorrelated data, we will see that the answer is certainly yes! We will break the example into two parts. First, we will split the data randomly into training and validation sets and achieve a very high accuraccy on the validation set. We will then split the data using stratified random sampling, thus reducing information leakage. We will then see how the same model has almost zero accuracy.</p>
+<h2 id="By-how-much-can-model-performance-be-exaggerated-with-information-leakage?">By how much can model performance be exaggerated with information leakage?<a class="anchor-link" href="#By-how-much-can-model-performance-be-exaggerated-with-information-leakage?">&#182;</a></h2><p>After reading the above, it is natural to ask, is this an important enough problem for me to care about? Through an example of highly autocorrelated data, we will see that the answer is certainly yes! We will break the example into two parts. First, we will split the data randomly into training and validation sets and achieve a very high accuracy on the validation set. We will then split the data using stratified random sampling, thus reducing information leakage. We will then see how the same model has almost zero accuracy.</p>
 <h2 id="Interactive-example">Interactive example<a class="anchor-link" href="#Interactive-example">&#182;</a></h2><p>If you wish to follow this example interactively, you can use <a href="https://colab.research.google.com/drive/1EJFCIX4enOvwLby_0DPFX4-KwG-S7YTF#scrollTo=lgm0yAIwN6O9" target="page">this colab notebook</a>.</p>
 <p>Let's first import the relevant packages.</p>
 
@@ -13221,7 +13221,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Random-splitting-of-data">Random splitting of data<a class="anchor-link" href="#Random-splitting-of-data">&#182;</a></h3><p>Let's split the data randomly into training and validation set and see how well the model does.</p>
+<h3 id="Random-splitting-of-data">Random splitting of data<a class="anchor-link" href="#Random-splitting-of-data">&#182;</a></h3><p>Let's split the data randomly into training and validation sets and see how well the model does.</p>
 
 </div>
 </div>
@@ -13232,11 +13232,11 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python"><pre><span></span><span class="c1"># Use a helper to split data randomly into 5 folds. i.e., 4/5ths of the data</span>
-<span class="c1"># is chosen *randomly* and put into the train set, while the rest is put into </span>
+<span class="c1"># is chosen *randomly* and put into the training set, while the rest is put into </span>
 <span class="c1"># the validation set.</span>
 <span class="n">kf</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="c1"># Use a random forest model with default parameters. </span>
-<span class="c1"># The hyperaparameter of the model are not important for this example because we</span>
+<span class="c1"># The hyperparameters of the model are not important for this example because we</span>
 <span class="c1"># will use the same model twice- once with data split randomly and (later) with </span>
 <span class="c1"># data split with stratification</span>
 <span class="n">reg</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">ensemble</span><span class="o">.</span><span class="n">RandomForestRegressor</span><span class="p">()</span>
@@ -13307,7 +13307,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Stratified-splitting-of-data">Stratified splitting of data<a class="anchor-link" href="#Stratified-splitting-of-data">&#182;</a></h3><p>Now, rather than splitting the data randomly, we will separate the data into 5 chunks along the x (feature) axis. We will then put 4 chunks into the training data and 1 chunk into the validation set.</p>
-<p>Let's see if the model has the same accuraccy.</p>
+<p>Let's see if the model has the same accuracy.</p>
 
 </div>
 </div>
@@ -13317,7 +13317,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># How many chunks to split data in? </span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># How many chunks to split data into? </span>
 <span class="n">nbins</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;fold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbins</span><span class="p">))</span>
 
@@ -13328,7 +13328,7 @@ div#notebook {
   <span class="n">test_index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">fold</span><span class="o">==</span><span class="n">fold</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
   <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_index</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_index</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span>
   <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_index</span><span class="p">,</span> <span class="s2">&quot;y_pred&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_index</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="c1"># Visualize true y versus precited y.</span>
+<span class="c1"># Visualize true y versus predicted y.</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
@@ -13381,8 +13381,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we see that our model has below random performance (negative coefficient of determination)! This shows that our initial model was not really using x as an informative predictor for y, rather only to find the nearest x from the training set and spit out the corresponding y. Thus if we are not careful about autocorrelation in our data, we may have exaggerated model performance.</p>
-<p>Worse, we may have erronously infferred the importance of x, and went on to draw several scientific conclusions. Whereas, our model was using x only to interpolate/memorize the response. This is unfortunately not a made-up example. <a href="https://www.nature.com/articles/s41467-020-18321-y" target="page">This paper</a> shows that several papers in the geosciences attempting to predict vegetation biomass (similar to Sam's example in the beginning of this article) are riddled with this problem.</p>
+<p>Now, we see that our model has below random performance (negative coefficient of determination)! This shows that our initial model was not really using x as an informative predictor for y, rather only to find the nearest x from the training set and spit out the corresponding y. Thus, if we are not careful about autocorrelation in our data, we may have exaggerated model performance.</p>
+<p>Worse, we may have erroneously inferred the importance of x, and went on to draw several scientific conclusions. Whereas, our model was using x only to interpolate/memorize the response. This is unfortunately not a made-up example. <a href="https://www.nature.com/articles/s41467-020-18321-y" target="page">This paper</a> shows that several papers in the geosciences attempting to predict vegetation biomass (similar to Sam's example in the beginning of this article) are riddled with this problem.</p>
 
 </div>
 </div>
